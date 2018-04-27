@@ -7,6 +7,7 @@ public class DivisionOfNumbers implements NumbersManipulator {
     }
 
     public double manipulationOfNumbers(double[] listOfNumbers) {
+        result = 0;
         try {
             validator.validateDivision(listOfNumbers);
         } catch (DivideByZeroException e) {
