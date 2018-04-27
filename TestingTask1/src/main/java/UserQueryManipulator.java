@@ -12,25 +12,17 @@ public class UserQueryManipulator implements Actions {
     }
 
     public double[] EnteredByUserNumbers;
-    public double[] getEnteredByUserNumbers() {
-        return EnteredByUserNumbers;
-    }
     private void setEnteredByUserNumbers(double[] enteredByUserNumbers) {
         EnteredByUserNumbers = enteredByUserNumbers;
     }
 
     public char WantedOperation;
-    public char getWantedOperation() {
-        return WantedOperation;
-    }
-    public void setWantedOperation(char wantedOperation) {
-        WantedOperation = wantedOperation;
-    }
 
     public void action() {
         String userInput = "";
         System.out.println("Enter your expression");
-        System.out.println("Use '+', '-', '*' or '/' and numbers.");
+        System.out.println("Use '+', '-', '*' or '/' and numbers for calculating.");
+        System.out.println("Use Y/y for exit:");
         Scanner in = new Scanner(System.in);
         if (in.hasNext()) {
             userInput = in.next();
@@ -85,6 +77,10 @@ public class UserQueryManipulator implements Actions {
                 break;
             }
 
+            case 'Y':{
+                break;
+            }
+
         }
     }
 
@@ -93,7 +89,7 @@ public class UserQueryManipulator implements Actions {
         if (delimiter == '0'){
             throw new NoSuchOperationException("There is no such operation with numbers like: ", delimiter);
         }
-        String[] subStrings = input.split(String.format("\\%s", delimiter));
+        String[] subStrings = input.replaceAll("\\s", "").split(String.format("\\%s", delimiter));
         return subStrings;
     }
 

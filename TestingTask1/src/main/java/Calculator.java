@@ -4,7 +4,9 @@ public class Calculator {
         Validator validator = new Validator();
         UserQueryManipulator queryManipulator = new UserQueryManipulator(validator, builder);
 
-        queryManipulator.action();
-        queryManipulator.defineWantedOperation();
+        while (true) {
+            queryManipulator.action();
+            queryManipulator.defineWantedOperation();
+        }
     }
 }
