@@ -1,4 +1,4 @@
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserQueryManipulator implements Actions {
@@ -11,8 +11,9 @@ public class UserQueryManipulator implements Actions {
         this.validator = validator;
     }
 
-    public double[] EnteredByUserNumbers;
-    private void setEnteredByUserNumbers(double[] enteredByUserNumbers) {
+    public ArrayList<Double> EnteredByUserNumbers;
+
+    public void setEnteredByUserNumbers(ArrayList<Double> enteredByUserNumbers) {
         EnteredByUserNumbers = enteredByUserNumbers;
     }
 
@@ -27,84 +28,117 @@ public class UserQueryManipulator implements Actions {
         if (in.hasNext()) {
             userInput = in.next();
         }
-        if (validator.validateUserQuery(userInput, this)) {
-            setEnteredByUserNumbers(getUserNumbers(userInput));
-        }
-        else {
-                System.out.println("You entered wrong expression! Please try again: ");
-                action();
-        }
-    }
-
-    public double[] getUserNumbers(String userInput) {
-
-        String[] subStrings = new String[2];
         try {
-            subStrings = splitInputOnNumbers(userInput);
-        } catch (NoSuchOperationException e) { }
-        double[] numbers = new double[2];
-        int i = 0;
-        for (String subString : subStrings) {
-            numbers[i] = Double.parseDouble(subString);
-            i++;
+            setEnteredByUserNumbers(splitInputOnNumbers(userInput));
+        } catch(Exception ex){
+            System.out.println("You entered wrong expression! Please try again: ");
+            action();
         }
-        return numbers;
     }
 
-    public void defineWantedOperation(){
-        switch (WantedOperation){
-            case '+' : {
+    public void defineWantedOperation() {
+        switch (WantedOperation) {
+            case '+': {
                 builder.SumOfNumbers.manipulationOfNumbers(EnteredByUserNumbers);
                 builder.SumOfNumbers.printResult();
                 break;
             }
 
-            case '/' :{
+            case '/': {
                 builder.DivisionOfNumbers.manipulationOfNumbers(EnteredByUserNumbers);
                 builder.DivisionOfNumbers.printResult();
                 break;
             }
 
-            case '*' :{
+            case '*': {
                 builder.MultiplicationOfNumbers.manipulationOfNumbers(EnteredByUserNumbers);
                 builder.MultiplicationOfNumbers.printResult();
                 break;
             }
 
-            case '-' :{
+            case '-': {
                 builder.SubtractionOfNumbers.manipulationOfNumbers(EnteredByUserNumbers);
                 builder.SubtractionOfNumbers.printResult();
                 break;
             }
 
-            case 'Y':{
+            case 'Y': {
                 break;
             }
 
         }
     }
 
-    public String[] splitInputOnNumbers(String input) throws NoSuchOperationException{
-        char delimiter = determineSignOfOperation(input);
-        if (delimiter == '0'){
-            throw new NoSuchOperationException("There is no such operation with numbers like: ", delimiter);
+    public ArrayList<Double> splitInputOnNumbers(String input) throws NoSuchOperationException {
+        ArrayList<Double> operands = new ArrayList<Double>();
+        determineSignOfOperation(input);
+        if (WantedOperation == '(') {
+            operands = determineNumbersAndSignOfOperationIfUserUsedBraces(input);
+            if (WantedOperation == '0') {
+                throw new NoSuchOperationException("There is no such operation with numbers like: ", input);
+            }
+            else {
+                return operands;
+            }
         }
-        String[] subStrings = input.replaceAll("\\s", "").split(String.format("\\%s", delimiter));
-        return subStrings;
+        if (WantedOperation == '0') {
+            throw new NoSuchOperationException("There is no such operation with numbers like: ", input);
+        }
+        String[] arrayOfResults = splitOnStringsWithNumbers(input);
+        for (String item : arrayOfResults){
+            operands.add(parseToDouble(item));
+        }
+        return operands;
     }
 
-    private char determineSignOfOperation(String input) {
-        if (input.contains("+") && !input.contains("-") && !input.contains("/") && !input.contains("*")) {
-            return WantedOperation = '+';
+    private String[] splitOnStringsWithNumbers(String input){
+        return input.replaceAll("\\s", "").split(String.format("\\%s", WantedOperation));
+    }
+
+    private double parseToDouble(String stringNumber){
+        return Double.parseDouble(stringNumber);
+    }
+
+    private void determineSignOfOperation(String input) {
+
+        if (input.contains("(") && input.contains(")")) {
+            WantedOperation = '(';
+        } else if (input.contains("+") && !input.contains("-") && !input.contains("/") && !input.contains("*")) {
+            WantedOperation = '+';
         } else if (input.contains("-") && !input.contains("+") && !input.contains("/") && !input.contains("*")) {
-            return WantedOperation = '-';
+            WantedOperation = '-';
         } else if (input.contains("*") && !input.contains("-") && !input.contains("/") && !input.contains("+")) {
-            return WantedOperation = '*';
+            WantedOperation = '*';
         } else if (input.contains("/") && !input.contains("-") && !input.contains("+") && !input.contains("*")) {
-            return WantedOperation = '/';
+            WantedOperation = '/';
         } else {
-            return '0';
+            WantedOperation = '0';
         }
+    }
+
+    private ArrayList<Double> determineNumbersAndSignOfOperationIfUserUsedBraces(String input) {
+        ArrayList<Double> arrayOfNumbers = new ArrayList<Double>();
+        if (input.startsWith("(") && input.endsWith(")")){
+            String[] result = input.split("\\(");
+            String[] firstOperandAndSign = result[0].split("\\)");
+            arrayOfNumbers.add(parseToDouble(firstOperandAndSign[0]));
+            arrayOfNumbers.add(parseToDouble(result[1].split("\\)")[0]));
+            WantedOperation = firstOperandAndSign[1].toCharArray()[0];
+        } else if (input.startsWith("(")){
+            String convertedInput = input.replace("(", "");
+            String[] result = convertedInput.split("\\)");
+            arrayOfNumbers.add(parseToDouble(result[0]));
+            determineSignOfOperation(result[1]);
+            arrayOfNumbers.add(parseToDouble(splitOnStringsWithNumbers(result[1])[1]));
+        } else if (input.endsWith(")")){
+            String convertedInput = input.replace(")", "");
+            String[] result = convertedInput.split("\\(");
+            determineSignOfOperation(result[0]);
+            arrayOfNumbers.add(parseToDouble(splitOnStringsWithNumbers(result[0])[0]));
+            arrayOfNumbers.add(parseToDouble(result[1]));
+        }
+
+        return arrayOfNumbers;
     }
 }
 

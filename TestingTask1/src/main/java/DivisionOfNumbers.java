@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class DivisionOfNumbers implements NumbersManipulator {
     public Validator validator;
     private double result;
@@ -6,14 +8,14 @@ public class DivisionOfNumbers implements NumbersManipulator {
         this.validator = validator;
     }
 
-    public double manipulationOfNumbers(double[] listOfNumbers) {
+    public double manipulationOfNumbers(ArrayList<Double> listOfNumbers) {
         result = 0;
         try {
             validator.validateDivision(listOfNumbers);
         } catch (DivideByZeroException e) {
             System.out.println(e.getMessage());
         }
-        result = listOfNumbers[0] / listOfNumbers[1];
+        result = listOfNumbers.get(0) / listOfNumbers.get(1);
         return result;
     }
 

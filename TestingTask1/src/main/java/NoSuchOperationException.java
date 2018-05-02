@@ -1,11 +1,11 @@
 public class NoSuchOperationException extends Exception {
 
-    private char operator;
-    public char getOperator() {
-        return operator;
+    private String input;
+    public String getInput() {
+        return input;
     }
-    public NoSuchOperationException(String message, char operator){
+    public NoSuchOperationException(String message, String userInput){
         super(message);
-        this.operator = operator;
+        this.input = userInput;
     }
 }
