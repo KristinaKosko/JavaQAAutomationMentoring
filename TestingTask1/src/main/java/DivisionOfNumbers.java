@@ -12,10 +12,10 @@ public class DivisionOfNumbers implements NumbersManipulator {
         result = 0;
         try {
             validator.validateDivision(listOfNumbers);
+            result = listOfNumbers.get(0) / listOfNumbers.get(1);
         } catch (DivideByZeroException e) {
             System.out.println(e.getMessage());
         }
-        result = listOfNumbers.get(0) / listOfNumbers.get(1);
         return result;
     }
 

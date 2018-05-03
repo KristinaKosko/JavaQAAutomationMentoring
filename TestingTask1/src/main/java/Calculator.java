@@ -1,8 +1,11 @@
 public class Calculator {
     public static void main(String[] args){
+
         Builder builder = new Builder();
         Validator validator = new Validator();
-        UserQueryManipulator queryManipulator = new UserQueryManipulator(validator, builder);
+        Utils utils = new Utils();
+
+        UserQueryManipulator queryManipulator = new UserQueryManipulator(validator, builder, utils);
 
         while (true) {
             queryManipulator.action();

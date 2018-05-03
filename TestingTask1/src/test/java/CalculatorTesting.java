@@ -4,7 +4,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CalculatorTesting {
 
@@ -25,8 +24,28 @@ public class CalculatorTesting {
         };
     }
 
+    @DataProvider
+    public Object[][] divisionNegativeData(){
+        return new Object[][]{
+                {1, 0, 0},
+                {(-1), 0, 0},
+                {0, 0, 0},
+        };
+    }
+
     @Test(dataProvider = "sumPositiveData")
-    public void test_positive_sum_1and0(double first, double second, double result){
-        //Assert.assertEquals(builder.SumOfNumbers.manipulationOfNumbers( new ArrayList<Double>() {first, second}), result);
+    public void test_positive_sum(double first, double second, double result){
+        ArrayList<Double> arrayOfOperands = new ArrayList<Double>();
+        arrayOfOperands.add(first);
+        arrayOfOperands.add(second);
+        Assert.assertEquals(builder.getSumOfNumbers().manipulationOfNumbers(arrayOfOperands), result);
+    }
+
+    @Test(dataProvider = "divisionNegativeData")
+    public void test_negative_division(double first, double second, double result){
+        ArrayList<Double> arrayOfOperands = new ArrayList<Double>();
+        arrayOfOperands.add(first);
+        arrayOfOperands.add(second);
+        Assert.assertEquals(builder.getDivisionOfNumbers().manipulationOfNumbers(arrayOfOperands), result);
     }
 }
