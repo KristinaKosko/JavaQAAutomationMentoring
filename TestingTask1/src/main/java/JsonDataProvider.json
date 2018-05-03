@@ -1,0 +1,27 @@
+[
+  {
+    "firstOperand" : "(-1)",
+    "secondOperand" : "9",
+    "operation" : "+"
+  },
+  {
+    "firstOperand" : "0",
+    "secondOperand" : "3",
+    "operation" : "/"
+  },
+  {
+    "firstOperand" : "9",
+    "secondOperand" : "0",
+    "operation" : "/"
+  },
+  {
+    "firstOperand" : "1",
+    "secondOperand" : "8",
+    "operation" : "*"
+  },
+  {
+    "firstOperand" : "65",
+    "secondOperand" : "70",
+    "operation" : "-"
+  }
+]
