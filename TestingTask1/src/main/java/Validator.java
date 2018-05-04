@@ -14,4 +14,11 @@ public class Validator {
         }
         return true;
     }
+
+    public boolean validateMenu(String userQuery){
+        if (Integer.parseInt(userQuery) == 1 || Integer.parseInt(userQuery) == 2 || Integer.parseInt(userQuery) == 3){
+            return true;
+        }
+        return false;
+    }
 }

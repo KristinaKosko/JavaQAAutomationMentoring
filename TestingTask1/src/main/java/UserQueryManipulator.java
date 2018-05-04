@@ -4,13 +4,15 @@ import java.util.Scanner;
 public class UserQueryManipulator implements Actions {
 
     Validator validator;
+    DataReadersBuilder dataReadersBuilder;
     Builder builder;
     Utils utils;
 
-    public UserQueryManipulator(Validator validator, Builder builder, Utils utils) {
+    public UserQueryManipulator(Validator validator, Builder builder, Utils utils, DataReadersBuilder dataReadersBuilder) {
         this.builder = builder;
         this.validator = validator;
         this.utils = utils;
+        this.dataReadersBuilder = dataReadersBuilder;
     }
 
     public ArrayList<Double> EnteredByUserNumbers;
@@ -30,22 +32,42 @@ public class UserQueryManipulator implements Actions {
     }
 
     public void action() {
-        String userInput = "";
-        System.out.println("Use '+', '-', '*' or '/' and numbers for calculating;");
-        System.out.println("For expressions with negative numbers use brackets '(' and ')';");
-        System.out.println("Use Y/y for exit;");
-        System.out.print("Enter your expression: ");
         Scanner in = new Scanner(System.in);
+        String userInput = "";
+        utils.printMenu();
         if (in.hasNext()) {
             userInput = in.next();
         }
-        if (!validator.validateExit(userInput)) {
-            System.out.println("Thanks for using! Bye!");
-            System.exit(0);
-        }
         try {
-            setEnteredByUserNumbers(utils.splitInputOnNumbers(userInput, this));
-        } catch(Exception ex){
+            if (validator.validateMenu(userInput)) {
+                switch (Integer.parseInt(userInput)) {
+                    case (1):
+                        utils.printGuide();
+                        if (in.hasNext()) {
+                            userInput = in.next();
+                        }
+                        if (!validator.validateExit(userInput)) {
+                            System.out.println("Thanks for using! Bye!");
+                            System.exit(0);
+                        }
+                        setEnteredByUserNumbers(utils.splitInputOnNumbers(userInput, this));
+                        break;
+                    case (2):
+                        ArrayList<String> input = dataReadersBuilder.getDataGetterFromDB().getData();
+                        for (String expression : input) {
+                            setEnteredByUserNumbers(utils.splitInputOnNumbers(expression, this));
+                        }
+                        break;
+                    case (3):
+                        dataReadersBuilder.getJsonParser().parseJsonFile("C:\\Users\\Krystsina_Kasko\\IdeaProjects\\TestingTask1\\src\\main\\resources\\JsonDataProvider.json");
+                        input = dataReadersBuilder.getJsonParser().getData();
+                        for (String expression : input) {
+                            setEnteredByUserNumbers(utils.splitInputOnNumbers(expression, this));
+                        }
+                        break;
+                }
+            }
+        } catch (Exception ex) {
             System.out.println("You entered wrong expression! Please try again: ");
             action();
         }

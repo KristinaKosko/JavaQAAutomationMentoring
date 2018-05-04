@@ -4,8 +4,9 @@ public class Calculator {
         Builder builder = new Builder();
         Validator validator = new Validator();
         Utils utils = new Utils();
+        DataReadersBuilder dataReadersBuilder = new DataReadersBuilder();
 
-        UserQueryManipulator queryManipulator = new UserQueryManipulator(validator, builder, utils);
+        UserQueryManipulator queryManipulator = new UserQueryManipulator(validator, builder, utils, dataReadersBuilder);
 
         while (true) {
             queryManipulator.action();

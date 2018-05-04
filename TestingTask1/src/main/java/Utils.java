@@ -10,6 +10,19 @@ public class Utils {
         return Double.parseDouble(stringNumber);
     }
 
+    public void printGuide(){
+        System.out.println("Use '+', '-', '*' or '/' and numbers for calculating;");
+        System.out.println("For expressions with negative numbers use brackets '(' and ')';");
+        System.out.println("Use Y/y for exit;");
+        System.out.print("Enter your expression: ");
+    }
+
+    public void printMenu(){
+        System.out.println("Enter 1 if you want to print your expressions into console;");
+        System.out.println("Enter 2 if you want to use data from DataBase;");
+        System.out.println("Enter 3 if you want to use data from file (.json):");
+    }
+
     public void determineSignOfOperation(String input, UserQueryManipulator queryManipulator) {
 
         if (input.contains("(") && input.contains(")")) {
