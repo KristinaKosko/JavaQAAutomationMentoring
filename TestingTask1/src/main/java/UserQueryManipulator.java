@@ -51,11 +51,15 @@ public class UserQueryManipulator implements Actions {
                             System.exit(0);
                         }
                         setEnteredByUserNumbers(utils.splitInputOnNumbers(userInput, this));
+                        defineWantedOperation();
+                        printResultOfOperation();
                         break;
                     case (2):
                         ArrayList<String> input = dataReadersBuilder.getDataGetterFromDB().getData();
                         for (String expression : input) {
                             setEnteredByUserNumbers(utils.splitInputOnNumbers(expression, this));
+                            defineWantedOperation();
+                            printResultOfOperation();
                         }
                         break;
                     case (3):
@@ -63,6 +67,9 @@ public class UserQueryManipulator implements Actions {
                         input = dataReadersBuilder.getJsonParser().getData();
                         for (String expression : input) {
                             setEnteredByUserNumbers(utils.splitInputOnNumbers(expression, this));
+                            defineWantedOperation();
+                            System.out.print(EnteredByUserNumbers.get(0)+String.valueOf(WantedOperation)+EnteredByUserNumbers.get(1)+"=");
+                            printResultOfOperation();
                         }
                         break;
                 }
@@ -77,24 +84,44 @@ public class UserQueryManipulator implements Actions {
         switch (WantedOperation) {
             case '+': {
                 builder.getSumOfNumbers().manipulationOfNumbers(EnteredByUserNumbers);
-                builder.getSumOfNumbers().printResult();
                 break;
             }
 
             case '/': {
                 builder.getDivisionOfNumbers().manipulationOfNumbers(EnteredByUserNumbers);
-                builder.getDivisionOfNumbers().printResult();
                 break;
             }
 
             case '*': {
                 builder.getMultiplicationOfNumbers().manipulationOfNumbers(EnteredByUserNumbers);
-                builder.getMultiplicationOfNumbers().printResult();
                 break;
             }
 
             case '-': {
                 builder.getSubtractionOfNumbers().manipulationOfNumbers(EnteredByUserNumbers);
+                break;
+            }
+        }
+    }
+
+    public void printResultOfOperation() {
+        switch (WantedOperation) {
+            case '+': {
+                builder.getSumOfNumbers().printResult();
+                break;
+            }
+
+            case '/': {
+                builder.getDivisionOfNumbers().printResult();
+                break;
+            }
+
+            case '*': {
+                builder.getMultiplicationOfNumbers().printResult();
+                break;
+            }
+
+            case '-': {
                 builder.getSubtractionOfNumbers().printResult();
                 break;
             }

@@ -12,6 +12,6 @@ public class SumOfNumbers implements NumbersManipulator {
     }
 
     public void printResult() {
-        System.out.println(result);
+            System.out.println(result);
     }
 }

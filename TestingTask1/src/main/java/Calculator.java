@@ -10,7 +10,6 @@ public class Calculator {
 
         while (true) {
             queryManipulator.action();
-            queryManipulator.defineWantedOperation();
         }
     }
 }
