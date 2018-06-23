@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="CDP Calculator" verbose="1" parallel="methods" thread-count="5">
+    <listeners>
+        <listener class-name="TestListenerInJava"></listener>
+    </listeners>
+    <test name="test_positive_sum">
+        <classes>
+            <class name="SumCalculatorTest"/>
+        </classes>
+    </test>
+</suite>

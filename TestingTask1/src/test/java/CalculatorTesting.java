@@ -1,6 +1,7 @@
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -40,6 +41,15 @@ public class CalculatorTesting {
         arrayOfOperands.add(second);
         Assert.assertEquals(builder.getSumOfNumbers().manipulationOfNumbers(arrayOfOperands), result);
     }
+
+    @Test
+    public void test_positive_sub(double first, double second, double result){
+        ArrayList<Double> arrayOfOperands = new ArrayList<Double>();
+        arrayOfOperands.add(first);
+        arrayOfOperands.add(second);
+        Assert.assertEquals(builder.getSubtractionOfNumbers().manipulationOfNumbers(arrayOfOperands), result);
+    }
+
 
     @Test(dataProvider = "divisionNegativeData")
     public void test_negative_division(double first, double second, double result){

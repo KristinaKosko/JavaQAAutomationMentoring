@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite parallel="methods" name="Failed suite [CDP Calculator]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" parallel="methods" name="test_positive_sum(failed)">
+    <classes>
+      <class name="CalculatorTesting">
+        <methods>
+          <include name="setUp"/>
+          <include name="test_positive_sub"/>
+        </methods>
+      </class> <!-- CalculatorTesting -->
+    </classes>
+  </test> <!-- test_positive_sum(failed) -->
+</suite> <!-- Failed suite [CDP Calculator] -->

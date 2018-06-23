@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<TestData>
+    <firstOperand>2</firstOperand>
+    <secondOperand>1</secondOperand>
+    <result>1</result>
+    <firstOperand>0</firstOperand>
+    <secondOperand>1</secondOperand>
+    <result>-1</result>
+</TestData>
